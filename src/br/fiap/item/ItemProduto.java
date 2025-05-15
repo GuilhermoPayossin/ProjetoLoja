@@ -21,6 +21,10 @@ public class ItemProduto {
         return produto;
     }
 
+    public int getQuantidadeComprada() {
+        return quantidadeComprada;
+    }
+
     @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("#,##0.00");

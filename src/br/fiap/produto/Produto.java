@@ -15,8 +15,14 @@ public class Produto {
         this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
 
-    public Produto(int id) {
-        this.id = id;
+    public Produto(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Produto p = (Produto) obj;
+        return this.nome.equalsIgnoreCase(p.getNome());
     }
 
     @Override

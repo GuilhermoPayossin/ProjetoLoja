@@ -44,8 +44,6 @@ public class Controle {
                 p.debitarEstoque(quantidade);
                 nf.adicionarItem(new ItemProduto(p, quantidade));
             }
-
-
         }
     }
 
@@ -54,7 +52,7 @@ public class Controle {
         while (true) {
             try {
                 opcao = parseInt(showInputDialog(gerarMenu()));
-                if (opcao == 5) {
+                if (opcao == 4) {
                     return;
                 }
                 switch (opcao) {
@@ -62,10 +60,9 @@ public class Controle {
                         comprar();
                         break;
                     case 2:
+                        removerProduto();
                         break;
                     case 3:
-                        break;
-                    case 4:
                         fecharCompra();
                         break;
                     default:
@@ -77,22 +74,32 @@ public class Controle {
         }
     }
 
+    private void removerProduto() {
+        String nome = showInputDialog("Qual produto será removido?");
+        Produto produto = new Produto(nome);
+        nf.removerItem(produto);
+    }
+
     private void fecharCompra() {
+        if (!nf.isStatus()) {
+            showMessageDialog(null, "Nota já encerrada, inicie uma compra novamente");
+            return;
+        }
         double total = 0;
         for (ItemProduto ip : nf.getLista()) {
             total += ip.calcularTotal();
         }
         showMessageDialog(null, "R$" + total);
+        nf.setStatus(false);
     }
 
     private String gerarMenu() {
         return """
                 SISTEMA DE COMPRAS ONLINE
                 1 - Comprar
-                2 - Adicionar Produto
-                3 - Remover Produto
-                4 - Fechar Compra
-                5 - Finalizar Compra
+                2 - Remover Produto
+                3 - Fechar Compra
+                4 - Finalizar Compra
                 """;
     }
 }
